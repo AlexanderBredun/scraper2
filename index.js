@@ -24,7 +24,7 @@ app.get('/scrape', async (req, res) => {
     console.log(results)
     // saveToExcel(results, keyword);
     // res.download(`./${keyword}.xlsx`);
-    res.send(results)
+    res.status(200).send(results.toString())
 });
 
 const scrapeGoogleMaps = async (keyword) => {
@@ -42,11 +42,11 @@ const scrapeGoogleMaps = async (keyword) => {
     const page = await browser.newPage();
     await page.goto(`https://www.google.com/maps/search/${encodeURIComponent(keyword)}/@50.4018377,30.2208891,11z`);
     await page.waitForSelector('.Nv2PK');
-    const items = await scrapeItems(page, 2)
-
-
+    // const items = await scrapeItems(page, 2)
+    const linksCount =  await page.evaluate(`document.querySelectorAll('.Nv2PK > a').length`);
+    console.log(linksCount)
     await browser.close();
-    return items;
+    return linksCount;
 };
 
 const saveToExcel = (data, name) => {
