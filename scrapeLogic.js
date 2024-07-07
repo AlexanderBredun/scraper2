@@ -17,7 +17,7 @@ const scrapeLogic = async (res) => {
     const page = await browser.newPage();
 
     await page.goto(`https://www.google.com/maps/search/hello/@50.4018377,30.2208891,11z`);
-    await page.waitForSelector('.Nv2PK');
+    // await page.waitForSelector('.Nv2PK');
 
     // Set screen size
     // await page.setViewport({ width: 1080, height: 1024 });
