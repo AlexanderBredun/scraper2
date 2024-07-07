@@ -33,6 +33,7 @@ const scrapeGoogleMaps = async (keyword) => {
         "--disable-setuid-sandbox",
         "--no-sandbox",
         "--no-zygote",
+        "--single-process",
       ],
       executablePath:
         process.env.NODE_ENV === "production"
