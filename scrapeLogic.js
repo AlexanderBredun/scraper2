@@ -6,7 +6,6 @@ const scrapeLogic = async (res) => {
     args: [
       "--disable-setuid-sandbox",
       "--no-sandbox",
-      "--single-process",
       "--no-zygote",
     ],
     executablePath:
@@ -22,10 +21,10 @@ const scrapeLogic = async (res) => {
     // Set screen size
     await page.setViewport({ width: 1080, height: 1024 });
 
-    // // Type into search box
+    // Type into search box
     // await page.type(".search-box__input", "automate beyond recorder");
 
-    // // Wait and click on first result
+    // Wait and click on first result
     // const searchResultSelector = ".search-box__link";
     // await page.waitForSelector(searchResultSelector);
     // await page.click(searchResultSelector);
