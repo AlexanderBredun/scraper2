@@ -16,10 +16,11 @@ const scrapeLogic = async (res) => {
   try {
     const page = await browser.newPage();
 
-    await page.goto("https://developer.chrome.com/");
+    await page.goto(`https://www.google.com/maps/search/hello/@50.4018377,30.2208891,11z`);
+    await page.waitForSelector('.Nv2PK');
 
     // Set screen size
-    await page.setViewport({ width: 1080, height: 1024 });
+    // await page.setViewport({ width: 1080, height: 1024 });
 
     // Type into search box
     // await page.type(".search-box__input", "automate beyond recorder");
@@ -28,16 +29,17 @@ const scrapeLogic = async (res) => {
     // const searchResultSelector = ".search-box__link";
     // await page.waitForSelector(searchResultSelector);
     // await page.click(searchResultSelector);
-    const a = await page.evaluate('document.querySelector("h2").innerText');
-    console.log('my ', a)
+    const a = await page.evaluate('document.querySelector(".Nv2PK").innerText');
+    const b = await page.evaluate('document.querySelector("h2")');
+    console.log('my ', a, b?.classList)
     // Locate the full title with a unique string
-    const textSelector = await page.waitForSelector(
-      "#span-stylecolor-var-chrome-primary-span", {timeout: 0}
-    );
-    const fullTitle = await textSelector.evaluate((el) => el.innerText);
+    // const textSelector = await page.waitForSelector(
+    //   "#span-stylecolor-var-chrome-primary-span", {timeout: 0}
+    // );
+    // const fullTitle = await textSelector.evaluate((el) => el.innerText);
 
     // Print the full title
-    const logStatement = `The title of this blog post is ${fullTitle}`;
+    const logStatement = `The title of this blog post is ${a}`;
     console.log(logStatement);
     res.send(logStatement);
   } catch (e) {
