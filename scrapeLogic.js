@@ -6,7 +6,6 @@ const scrapeLogic = async (res) => {
     args: [
       "--disable-setuid-sandbox",
       "--no-sandbox",
-      "--single-process",
       "--no-zygote",
     ],
     executablePath:
@@ -17,27 +16,14 @@ const scrapeLogic = async (res) => {
   try {
     const page = await browser.newPage();
 
-    // Navigate the page to a URL.
-    await page.goto('https://developer.chrome.com/');
+    await page.goto("https://developer.chrome.com/");
+   
+    const fullTitle = await page.evaluate('document.querySelector("#span-stylecolor-var-chrome-primary-span").innerHTML');
 
-    // Set screen size.
-    await page.setViewport({ width: 1080, height: 1024 });
-
-    // Type into search box.
-    await page.locator('.devsite-search-field').fill('automate beyond recorder');
-
-    // Wait and click on first result.
-    await page.locator('.devsite-result-item-link').click();
-
-    // Locate the full title with a unique string.
-    const textSelector = await page
-      .locator('text/Customize and automate')
-      .waitHandle();
-    const fullTitle = await textSelector?.evaluate(el => el.textContent);
-
-    // Print the full title.
-    console.log('The title of this blog post is "%s".', fullTitle);
-    res.send('asd');
+    // Print the full title
+    const logStatement = `The title of this blog post is ${fullTitle}`;
+    console.log(logStatement);
+    res.send(logStatement);
   } catch (e) {
     console.error(e);
     res.send(`Something went wrong while running Puppeteer: ${e}`);
