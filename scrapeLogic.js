@@ -8,6 +8,7 @@ const scrapeLogic = async (res) => {
       "--no-sandbox",
       "--no-zygote",
     ],
+    headless: true,
     executablePath:
       process.env.NODE_ENV === "production"
         ? process.env.PUPPETEER_EXECUTABLE_PATH
@@ -15,10 +16,10 @@ const scrapeLogic = async (res) => {
   });
   try {
     const page = await browser.newPage();
-
-    await page.goto(`https://www.google.com/maps/search/hello/@50.4018377,30.2208891,11z`);
+    await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36");
+    const p = await page.goto(`https://www.google.com/maps/search/hello/@50.4018377,30.2208891,11z`);
     // await page.waitForSelector('.Nv2PK');
-
+    console.log(p.text)
     // Set screen size
     // await page.setViewport({ width: 1080, height: 1024 });
 
@@ -29,9 +30,9 @@ const scrapeLogic = async (res) => {
     // const searchResultSelector = ".search-box__link";
     // await page.waitForSelector(searchResultSelector);
     // await page.click(searchResultSelector);
-    const a = await page.evaluate('document.querySelector(".Nv2PK").innerText');
+    const a = await page.evaluate('document.querySelector(".Nv2PK")');
     const b = await page.evaluate('document.querySelector("h2")');
-    console.log('my ', a, b?.classList)
+    console.log('my ', a ? a.innerText : a, b?.classList)
     // Locate the full title with a unique string
     // const textSelector = await page.waitForSelector(
     //   "#span-stylecolor-var-chrome-primary-span", {timeout: 0}
