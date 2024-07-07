@@ -28,12 +28,13 @@ const scrapeLogic = async (res) => {
     // const searchResultSelector = ".search-box__link";
     // await page.waitForSelector(searchResultSelector);
     // await page.click(searchResultSelector);
-
+    const a = await page.evaluate('document.querySelector("h2").innerText');
+    console.log('my ', a)
     // Locate the full title with a unique string
     const textSelector = await page.waitForSelector(
-      "#span-stylecolor-var-chrome-primary-span"
+      "#span-stylecolor-var-chrome-primary-span", {timeout: 0}
     );
-    const fullTitle = await textSelector.evaluate((el) => el.textContent);
+    const fullTitle = await textSelector.evaluate((el) => el.innerText);
 
     // Print the full title
     const logStatement = `The title of this blog post is ${fullTitle}`;
